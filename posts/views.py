@@ -25,7 +25,9 @@ from .models import Post
 
 
 def post_create(request):
-	if not request.user.is_staff or not request.user.is_superuser:
+	# if not request.user.is_staff or not request.user.is_superuser:
+	# 	raise Http404
+	if not request.user.is_authenticated:
 		raise Http404
 		
 	form = PostForm(request.POST or None, request.FILES or None)
@@ -95,6 +97,9 @@ def post_list(request):
 	queryset_list = Post.objects.active() #.order_by("-timestamp")
 	if request.user.is_staff or request.user.is_superuser:
 		queryset_list = Post.objects.all()
+	else:
+		queryset_list = Post.objects.filter(user=request.user)
+
 	
 	query = request.GET.get("q")
 	if query:

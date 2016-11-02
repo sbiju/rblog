@@ -210,9 +210,9 @@
         <div class="tab-pane fade in" id="tab1">
           <h3>  {% if request.user.is_authenticated %}
               <i class="fa fa-sign-out" aria-hidden="true"></i>
-                <a href="#">Logout</a>
+                <a href="{% url 'logout' %}">Logout</a>
                 {% else %}
-                <a href="#"> Login </a>
+                <a href="{% url 'login' %}"> Login </a>
                 {% endif %}</h3>
         </div>
         <div class="tab-pane fade in  active " id="tab2">
