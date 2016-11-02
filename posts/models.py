@@ -18,9 +18,6 @@ from .utils import get_read_time
 # MVC MODEL VIEW CONTROLLER
 
 
-#Post.objects.all()
-#Post.objects.create(user=user, title="Some time")
-
 class PostManager(models.Manager):
     def active(self, *args, **kwargs):
         # Post.objects.all() = super(PostManager, self).all()
@@ -28,18 +25,14 @@ class PostManager(models.Manager):
 
 
 def upload_location(instance, filename):
-    #filebase, extension = filename.split(".")
-    #return "%s/%s.%s" %(instance.id, instance.id, extension)
     PostModel = instance.__class__
-    new_id = PostModel.objects.order_by("id").last().id + 1
-    """
-    instance.__class__ gets the model Post. We must use this method because the model is defined below.
-    Then create a queryset ordered by the "id"s of each object, 
-    Then we get the last object in the queryset with `.last()`
-    Which will give us the most recently created Model instance
-    We add 1 to it, so we get what should be the same id as the the post we are creating.
-    """
+    try:
+        new_id = PostModel.objects.order_by("id").last().id + 1
+    except:
+        PostModel.objects.last() == 0
+        new_id = 1
     return "%s/%s" %(new_id, filename)
+
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)

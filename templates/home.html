@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+                        {% if request.user.is_authenticated %}
+                         <li><a href="#">Profile</a></li>
+                        {% else %}
+                        <li> <a href="{% url 'register' %}">Register</a> </li>
+                         {% endif %}
+
+{% block content %}
+<div class="site-wrapper">
+  <div class="site-wrapper-inner">
+    <div class="cover-container">
+      <div class="masthead clearfix">
+        <div class="inner">
+          <h3 class="masthead-brand">ZETAA</h3>
+          <ul class="nav masthead-nav">
+                                {% if request.user.is_authenticated %}
+                        <li class="active"> <a href="{% url 'logout' %}">Logout</a> </li>
+                        {% else %}
+                        <li> <a href="{% url 'login' %}"> Login </a> </li>
+                        <li> <a href="{% url 'register' %}"> Register </a> </li>
+                        {% endif %}
+            <li>
+              <a href="{% url 'profiles:contact_us' %}">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="inner cover">
+        <h1 class="cover-heading">Welcome to Zetaa</h1>
+
+        <p class="lead">Please login/Register to enter the site.
+        </p>
+       {% if request.user.is_authenticated %}
+        <p class="lead"><a class="btn btn-lg btn-info" href="{% url 'profiles:profile' user.username %}">Enter
+        </a></p>
+        {% else %}
+        <p class="lead"><a class="btn btn-lg btn-info" href="{% url 'login' %}">Enter
+         {% endif %}
+        </a></p>
+      </div>
+
+      <div class="mastfoot">
+        <div class="inner">
+
+          <p><a href=
+          "#"
+          target="_blank"><small>Zetaa</small><sup>1</sup></a></p>
+
+
+          <p>© 2016 Zetaa ~</p>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+{% endblock content %}

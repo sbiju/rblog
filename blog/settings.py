@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # local apps
     'comments',
     'posts',
+    'profiles',
 
 ]
 
@@ -61,7 +62,9 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = 'account-redirect'
 ROOT_URLCONF = 'blog.urls'
 
 TEMPLATES = [
@@ -118,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Calcutta'
 
 USE_I18N = True
 
@@ -143,7 +146,12 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media_cdn")
 
 
-
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'jayabalanp9@gmail.com'
+EMAIL_HOST_PASSWORD = 'Jaya971269'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'blog@revathyblog.com'
 
 
 

@@ -6,6 +6,7 @@ from django.contrib.auth import (
 
     )
 from django.shortcuts import render, redirect
+from django.conf import settings
 
 from .forms import UserLoginForm, UserRegisterForm
 
@@ -21,7 +22,7 @@ def login_view(request):
         login(request, user)
         if next:
             return redirect(next)
-        return redirect("/")
+        return redirect('profiles:profile', username=request.user.username)
     return render(request, "form.html", {"form":form, "title": title})
 
 

@@ -1,60 +1,257 @@
+
+
 {% extends "base.html" %}
+{% load staticfiles %}
+
+
+
 {% block content %}
 
-
-<div class='col-sm-6 col-sm-offset-3'>
-    <h1>{{ title }}</h1>
-<form method='GET' action='' class='row'>
-        <div class='col-sm-6'>
-            <div class='input-group'>
-                <input class='form-control' type='text' name='q' placeholder='Search posts' value='{{ request.GET.q }}'/>
-                <span class='input-group-btn'>
-                    <!-- <input class='btn btn-default' type='submit' value='Search' /> -->
-                    <button class='btn btn-default' type='submit'>Search <i class="fa fa-search"></i></button>
-                </span>
+    <div class="row">
+            <div class='col-sm-4'>
+                <form method='GET' action=''>
+                <input type='text' name='q' placeholder='Search posts' value='{{ request.GET.q }}'/>
+                <input type='submit' class="btn btn-info" />
+                </form>
             </div>
-        </div>
-</form>
-{% for obj in object_list %}
-<div class="row">
-  <div class="col-sm-12">
-    <div class="thumbnail">
-        {% if obj.image %}
-         <img src='{{ obj.image.url }}' class='img-responsive' />
-        {% endif %}
-      <div class="caption post-detail-item">
-        {% if obj.draft %}<h3>Staff only: Draft</h3>{% endif %} {% if obj.publish > today %}<h3>Staff Only: Future Post</h3>{% endif %}
-        <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small>{{ obj.publish }}</small></h3>
-        {% if obj.user.get_full_name %}<p>Author: {{ obj.user.get_full_name }}</p>{% endif %}
-        {{ obj.get_markdown|truncatechars_html:120 }}
-        <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
-      </div>
     </div>
-  </div>
-<hr/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12 post">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="{% url 'posts:list' %}" aria-controls="home" role="tab" data-toggle="tab">Posts </a></li>
+                                </ul>
+                               <div class="tab-content">
+                                  <div role="tabpanel" class="tab-pane fade" id="home"><a href="#"> <div class="list-group">
+                                        <a href="{% url 'posts:list' %}" class="list-group-item">Shared Post </a>
+                                        <a href="{% url 'posts:list' %}" class="list-group-item">All Posts</a>
+                                        <a href="{% url 'posts:list' %}" class="list-group-item">Drafts</a>
+                                      </div></a></div>
+                                </div>
+                    </div>
+                        </div>
+                    <div class="row post-content">
+                        <div class="col-md-6 col-md-offset-3">
+                            {% for obj in object_list %}
+                         <div class=" thumbnail ">
+                                {% if obj.image %}
+                                    <img src='{{ obj.image.url }}' class='img-responsive' />
+                                {% endif %}
+                                    <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary">View</a></p>
+                            <i class="fa fa-anchor" aria-hidden="true"></i>
+                             {{ obj.title }} <i class="glyphicon glyphicon-calendar">
+                            </i> {{ obj.publish }} <i class="fa fa-user-md" aria-hidden="true"></i> {{ obj.owner }}
+
+                         </div>
+                        {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-3">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="{% static 'img/frnd.jpg' %}" alt="" class="img-responsive" />
+                    </div>
+                    <div class="item">
+                        <img src="{% static 'img/nat1.jpg' %}" alt="" class="img-responsive" />
+                    </div>
+                    <div class="item">
+                       <img src="{% static 'img/frnd1.jpg' %}" alt="" class="img-responsive" />
+                    </div>
+                    <div class="item">
+                        <img src="{% static 'img/nat.jpg' %}" alt="" class="img-responsive" />
+                    </div>
+                </div>
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control"
+                        href="#carousel-example-generic" data-slide="next"><span class="glyphicon glyphicon-chevron-right">
+                    </span></a>
+
+            </div>
+                <br/>
+            	<div class="well">
+                    <h4><i class="fa fa-thumbs-o-up"></i> Follow me!</h4>
+					<ul>
+                    <p><a title="Facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x">
+
+                    </i></span></a> <a title="Twitter" href="https://twitter.com/home?status={{ request.build_absolute_uri }}"><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x"></i></span></a>
+                        <a title="Google+" href="https://plus.google.com/share?url={{ request.build_absolute_uri }}"><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-google-plus fa-stack-1x"></i></span></a>
+                        <a title="Linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}"><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x"></i></span></a>
+                        <a title="GitHub" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-github fa-stack-1x"></i></span></a>
+                        <a title="Bitbucket" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-bitbucket fa-stack-1x"></i></span></a></p>
+					</ul>
+                </div><br/>
+        <div>
+                <h3>Contact:</h3>
+				<p>Have a question or feedback? Contact me!</p>
+				<p><a href="{% url 'profiles:contact_us' %}" title="Contact me!"><i class="fa fa-envelope"></i> Contact</a></p>
+            <br/>
+            <h3>Follow:</h3>
+                <a href="https://twitter.com/home?status={{ request.build_absolute_uri }}" id="gh" target="_blank" title="Twitter"><span class="fa-stack fa-lg">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-twitter fa-stack-1x"></i>
+                </span>
+                Twitter</a>
+                <a href=""  target="_blank" title="GitHub"><span class="fa-stack fa-lg">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x"></i>
+                </span>
+                GitHub</a><br/><br/><br/>
+            <p><a href="#">Subscribe to my RSS feed</a></p>
+
+        </div>
+    </div>
 </div>
-{% endfor %}
 
-
-<div class="pagination">
-    <span class="step-links">
-        {% if object_list.has_previous %}
-            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+ <div class="row">
+    <div class="pagination">
+        <span class="step-links">
+            {% if object_list.has_previous %}
+                <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+            </span>
+            {% if object_list.has_next %}
+                <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+            {% endif %}
         </span>
-
-        {% if object_list.has_next %}
-            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
-        {% endif %}
-    </span>
-</div>
+    </div>
+ </div>
 
 
 
 
-</div>
+{% endblock %}
 
-{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<div class="row">-->
+            <!--<div class='col-sm-4 col-sm-offset-2'>-->
+                <!--<h1>{{ title }}</h1>-->
+                <!--<form method='GET' action=''>-->
+                <!--<input type='text' name='q' placeholder='Search posts' value='{{ request.GET.q }}'/>-->
+                <!--<input type='submit' class="btn btn-info" value='Search' />-->
+                <!--</form>-->
+            <!--</div>-->
+    <!--</div>-->
+
+
+    <!--<div class="row">-->
+        <!--<div class='col-sm-5 col-sm-offset-2'>-->
+                        <!--{% for obj in object_list %}-->
+                         <!--<div class="col-sm-12 thumbnail ">-->
+                                <!--{% if obj.image %}-->
+                                    <!--<img src='{{ obj.image.url }}' class='img-responsive' />-->
+                                <!--{% endif %}-->
+                                <!--<div class="caption">-->
+                                    <!--{% if obj.draft %}<h3>Staff only: Draft</h3>{% endif %} {% if obj.publish > today %}<h3>Staff Only: Future Post</h3>{% endif %}-->
+                                    <!--<h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small>{{ obj.publish }}</small></h3>-->
+                                    <!--{% if obj.user.get_full_name %}<p>Author: {{ obj.user.get_full_name }}</p>{% endif %}-->
+                                    <!--<p>{{ obj.content|linebreaks|truncatechars:120 }}</p>-->
+                                    <!--<p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>-->
+                                <!--</div>-->
+                         <!--</div>-->
+                        <!--{% endfor %}-->
+
+        <!--</div>-->
+
+
+
+
+
+
+            <!--<div class="col-sm-4">-->
+                <!--<h3>Friends</h3>-->
+                <!--{% for obj in user_list %}-->
+
+                  <!--<ol class="list-unstyled">-->
+                   <!--<li><a href="{% url 'profiles:user_detail' obj.pk %}"> {{ obj.first_name }}</a></li>-->
+                  <!--</ol>-->
+                <!--{% endfor %}-->
+            <!--</div>-->
+    <!--</div>-->
+
+
+    <!--<div class="pagination">-->
+        <!--<span class="step-links">-->
+            <!--{% if object_list.has_previous %}-->
+                <!--<a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>-->
+            <!--{% endif %}-->
+            <!--<span class="current">-->
+                <!--Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.-->
+            <!--</span>-->
+            <!--{% if object_list.has_next %}-->
+                <!--<a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>-->
+            <!--{% endif %}-->
+        <!--</span>-->
+    <!--</div>-->
+
+
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@
 <!--DOCTYPE html -->
 <html>
 <head>
-<title>{% block head_title %}Advancing the Blog{% endblock head_title %}</title>
+<title>{% block head_title %} Zetaa | {{title }}{% endblock head_title %}</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -32,19 +32,7 @@ fjs.parentNode.insertBefore(js, fjs);
 
 
 {% include "messages_display.html" %}
-<div class='container'> 
-    <ol class='breadcrumb'>
-        <li><a href='{% url "posts:list" %}'>Home</a></li>
-        {% block post_detail_link %}
-        {% endblock %}
-
-        {% if not request.user.is_authenticated %}
-        <li class='pull-right'><a href='{% url "register" %}'>Register</a></li>
-        <li class='pull-right'><a href='{% url "login" %}'>Login</a></li>
-        {% else %}
-        <li class='pull-right'><a href='{% url "logout" %}'>Logout</a></li>
-        {% endif %}
-    </ol>
+<div class='container'>
 {% block content %}{% endblock content %}
 </div>
 
@@ -57,6 +45,7 @@ fjs.parentNode.insertBefore(js, fjs);
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'></script>
+<link rel='stylesheet' href='{% static "js/custom.js" %}' />
 
 <script type="text/javascript">
 $(document).ready(function(){
