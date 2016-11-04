@@ -265,9 +265,8 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
   height: 100%;
-  background-color: #060;
+  background-color:#7ea9b0;
   color: #182d12;
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
