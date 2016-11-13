@@ -43,6 +43,7 @@
                                 {% if obj.image %}
                                     <img src='{{ obj.image.url }}' class='img-responsive' />
                                 {% endif %}
+                             <br/>
                                     <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary">View</a></p>
                             <i class="fa fa-anchor" aria-hidden="true"></i>
                              {{ obj.title }} <i class="glyphicon glyphicon-calendar">

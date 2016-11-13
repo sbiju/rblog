@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     # third party
     'crispy_forms',
     'markdown_deux',
     'pagedown',
+    'django_messages',
 
     # local apps
     'comments',
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     'profiles',
 
 ]
-
+SITE_ID = 1
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE_CLASSES = [

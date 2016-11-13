@@ -10,6 +10,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^comments/', include("comments.urls", namespace='comments')),
+    url(r'^messages/', include('django_messages.urls')),
     url(r'^register/', register_view, name='register'),
     url(r'^login/', login_view, name='login'),
     url(r'^logout/', logout_view, name='logout'),
