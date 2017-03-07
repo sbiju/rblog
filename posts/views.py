@@ -24,8 +24,8 @@ from .models import Post
 
 @login_required
 def post_create(request):
-	# if not request.user.is_staff or not request.user.is_superuser:
-	# 	raise Http404
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise Http404
 	if not request.user.is_authenticated:
 		raise Http404
 		
@@ -193,8 +193,6 @@ def post_update(request, slug=None):
 
 @login_required
 def post_delete(request, slug=None):
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
 	instance = get_object_or_404(Post, slug=slug)
 	instance.delete()
 	messages.success(request, "Successfully deleted")
